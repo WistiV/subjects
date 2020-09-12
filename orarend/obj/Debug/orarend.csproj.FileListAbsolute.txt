@@ -1,0 +1,10 @@
+E:\C#\orarend\orarend\bin\Debug\orarend.exe.config
+E:\C#\orarend\orarend\bin\Debug\orarend.exe
+E:\C#\orarend\orarend\bin\Debug\orarend.pdb
+E:\C#\orarend\orarend\obj\Debug\orarend.csprojAssemblyReference.cache
+E:\C#\orarend\orarend\obj\Debug\orarend.Properties.Resources.resources
+E:\C#\orarend\orarend\obj\Debug\orarend.csproj.GenerateResource.cache
+E:\C#\orarend\orarend\obj\Debug\orarend.exe
+E:\C#\orarend\orarend\obj\Debug\orarend.pdb
+E:\C#\orarend\orarend\obj\Debug\orarend.Starter.resources
+E:\C#\orarend\orarend\obj\Debug\orarend.TimeTable.resources
