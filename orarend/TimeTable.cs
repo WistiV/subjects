@@ -13,13 +13,13 @@ namespace orarend
     public partial class TimeTable : Form
     {
         List<Result> r;
-        int i;
+        int ResultIterable;
         public TimeTable(List<Result> r)
         {
             InitializeComponent();
             this.r = r;
-            i = 0;
-            Page.Text = (i + 1) + "/" + r.Count;
+            ResultIterable = 0;
+            Page.Text = (ResultIterable + 1) + "/" + r.Count;
             Image img1 = Image.FromFile("../arrow.png");
             if (r.Count > 1) Next.Image = img1;
             Image img2 = Image.FromFile("../arrow.png");
@@ -52,35 +52,37 @@ namespace orarend
                 if (pb != null) pb.BackColor = Color.Empty;
             }
             List.Items.Clear();
-            foreach (ResultSubject rs in r[i].GetSubjects())
+            foreach (ResultSubject rs in r[ResultIterable].GetSubjects())
             {
                 
                 List.Items.Add(rs);
                 int day = (int)rs.time.day;
                 for(int i=rs.time.time;i<rs.time.time+rs.length;i++)
                 {
-                    (this.Controls.Find(day + "," + i, true)[0] as PictureBox).BackColor = Color.Blue;
+                    PictureBox pb = (this.Controls.Find(day + "," + i, true)[0] as PictureBox);
+                    if (pb.BackColor != Color.Blue) pb.BackColor = Color.Blue;
+                    else pb.BackColor = Color.Red;
                 }
             }
         }
 
         private void Previous_Click(object sender, EventArgs e)
         {
-            if (i <= 0) return;
-            i--;
-            Page.Text = (i + 1) + "/" + r.Count;
-            if (i == 0) Previous.Visible = false;
-            if (i != r.Count - 1) Next.Visible = true;
+            if (ResultIterable <= 0) return;
+            ResultIterable--;
+            Page.Text = (ResultIterable + 1) + "/" + r.Count;
+            if (ResultIterable == 0) Previous.Visible = false;
+            if (ResultIterable != r.Count - 1) Next.Visible = true;
             showtable();
         }
 
         private void Next_Click(object sender, EventArgs e)
         {
-            if (i == r.Count-1) return;
-            i++;
-            Page.Text = (i + 1) + "/" + r.Count;
-            if (i == r.Count - 1) Next.Visible = false;
-            if (i != 0) Previous.Visible = true;
+            if (ResultIterable == r.Count-1) return;
+            ResultIterable++;
+            Page.Text = (ResultIterable + 1) + "/" + r.Count;
+            if (ResultIterable == r.Count - 1) Next.Visible = false;
+            if (ResultIterable != 0) Previous.Visible = true;
             showtable();
         }
     }

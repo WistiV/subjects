@@ -177,11 +177,19 @@ namespace orarend
                 MessageBox.Show("Ennél talán egy kicsivel több órát is be lehetne vállalni.");
                 return;
             }
-            List<Result> r = get_results(subjects);
+            List<Result> r = get_results(subjects,0);
             if(r.Count==0)
             {
-                MessageBox.Show("Nincs a megadott feltételeknek megfelelő órarend");
-                return;
+                DialogResult result = MessageBox.Show("Sajnos nem tudtuk összeállítani az órarendjét ütközés nélkül. Szeretné hogy összeállítsuk az órarendjét a lehető legkevesebb ütközéssel?","Failure",MessageBoxButtons.YesNo);
+                if(result == DialogResult.Yes)
+                {
+                    int i = 1;
+                    while(r.Count==0)
+                    {
+                        r = get_results(subjects, i);
+                    }
+                }
+                else return;
             }
             using (TimeTable tt=new TimeTable(r))
             {
@@ -189,15 +197,15 @@ namespace orarend
             }
         }
 
-        private List<Result> get_results(List<Subject> s)
+        private List<Result> get_results(List<Subject> s,int maxconflictnumber)
         {
             Result r = new Result();
             List<Result> rs = new List<Result>();
-            get_results(s, r, rs);
+            get_results(s, r, rs, maxconflictnumber, 0);
             return rs;
         }
         
-        private void get_results(List<Subject> s,Result r,List<Result> rs)
+        private void get_results(List<Subject> s,Result r,List<Result> rs,int maxconflictnumber,int conflictnumber)
         {
             Subject sub = s[r.count()];
             for(sub.first(); !sub.end(); sub.next())
@@ -205,8 +213,17 @@ namespace orarend
                 if(r.add(new ResultSubject(sub.name, sub.length, sub.current())))
                 {
                     if (r.count() == s.Count) rs.Add(new Result(r));
-                    else get_results(s, r, rs);
+                    else get_results(s, r, rs, maxconflictnumber,conflictnumber);
                     r.removelast();
+                }
+                else if(conflictnumber<maxconflictnumber)
+                {
+                    r.add_anyway(new ResultSubject(sub.name, sub.length, sub.current()));
+                    ++conflictnumber;
+                    if (r.count() == s.Count) rs.Add(new Result(r));
+                    else get_results(s, r, rs, maxconflictnumber, conflictnumber);
+                    r.removelast();
+                    --conflictnumber;
                 }
             }
         }

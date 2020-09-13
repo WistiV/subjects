@@ -29,6 +29,11 @@ namespace orarend
             r.Add(rs);
             return true;
         }
+
+        public void add_anyway(ResultSubject rs)
+        {
+            r.Add(rs);
+        }
         public int count() { return r.Count; }
         public void removelast()
         {
