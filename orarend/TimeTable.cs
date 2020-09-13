@@ -12,16 +12,16 @@ namespace orarend
 {
     public partial class TimeTable : Form
     {
-        Results r;
+        List<Result> r;
         int i;
-        public TimeTable(Results r)
+        public TimeTable(List<Result> r)
         {
             InitializeComponent();
             this.r = r;
             i = 0;
-            Page.Text = (i + 1) + "/" + r.count();
+            Page.Text = (i + 1) + "/" + r.Count;
             Image img1 = Image.FromFile("../arrow.png");
-            if (r.count() > 1) Next.Image = img1;
+            if (r.Count > 1) Next.Image = img1;
             Image img2 = Image.FromFile("../arrow.png");
             img2.RotateFlip(RotateFlipType.Rotate90FlipNone);
             img2.RotateFlip(RotateFlipType.Rotate90FlipNone);
@@ -52,7 +52,7 @@ namespace orarend
                 if (pb != null) pb.BackColor = Color.Empty;
             }
             List.Items.Clear();
-            foreach (ResultSubject rs in r.GetResult(i).GetSubjects())
+            foreach (ResultSubject rs in r[i].GetSubjects())
             {
                 
                 List.Items.Add(rs);
@@ -68,18 +68,18 @@ namespace orarend
         {
             if (i <= 0) return;
             i--;
-            Page.Text = (i + 1) + "/" + r.count();
+            Page.Text = (i + 1) + "/" + r.Count;
             if (i == 0) Previous.Visible = false;
-            if (i != r.count() - 1) Next.Visible = true;
+            if (i != r.Count - 1) Next.Visible = true;
             showtable();
         }
 
         private void Next_Click(object sender, EventArgs e)
         {
-            if (i == r.count()-1) return;
+            if (i == r.Count-1) return;
             i++;
-            Page.Text = (i + 1) + "/" + r.count();
-            if (i == r.count() - 1) Next.Visible = false;
+            Page.Text = (i + 1) + "/" + r.Count;
+            if (i == r.Count - 1) Next.Visible = false;
             if (i != 0) Previous.Visible = true;
             showtable();
         }

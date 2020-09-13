@@ -177,8 +177,8 @@ namespace orarend
                 MessageBox.Show("Ennél talán egy kicsivel több órát is be lehetne vállalni.");
                 return;
             }
-            Results r = get_results(subjects);
-            if(r.count()==0)
+            List<Result> r = get_results(subjects);
+            if(r.Count==0)
             {
                 MessageBox.Show("Nincs a megadott feltételeknek megfelelő órarend");
                 return;
@@ -189,22 +189,22 @@ namespace orarend
             }
         }
 
-        private Results get_results(List<Subject> s)
+        private List<Result> get_results(List<Subject> s)
         {
             Result r = new Result();
-            Results rs = new Results();
+            List<Result> rs = new List<Result>();
             get_results(s, r, rs);
             return rs;
         }
         
-        private void get_results(List<Subject> s,Result r,Results rs)
+        private void get_results(List<Subject> s,Result r,List<Result> rs)
         {
             Subject sub = s[r.count()];
             for(sub.first(); !sub.end(); sub.next())
             {
                 if(r.add(new ResultSubject(sub.name, sub.length, sub.current())))
                 {
-                    if (r.count() == s.Count) rs.add(new Result(r));
+                    if (r.count() == s.Count) rs.Add(new Result(r));
                     else get_results(s, r, rs);
                     r.removelast();
                 }

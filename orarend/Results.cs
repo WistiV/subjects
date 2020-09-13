@@ -6,18 +6,6 @@ using System.Threading.Tasks;
 
 namespace orarend
 {
-    public class Results
-    {
-        List<Result> r;
-
-        public Results() { r = new List<Result>(); }
-
-        public void add(Result res) { r.Add(res); }
-        public int count() { return r.Count; }
-
-        public Result GetResult(int i) { return r[i]; }
-    }
-
     public class Result
     {
         List<ResultSubject> r;
